@@ -1,0 +1,72 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: 'sam-app
+
+  Sample AWS SAM Template
+
+  '
+Globals:
+  Function:
+    Timeout: 3
+Parameters:
+  PREFIX:
+    Type: String
+    Default: SAM
+  ORIGIN:
+    Type: String
+    Default: master.example.amplifyapp.com
+  APIKEY:
+    Type: String
+    Default: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+Resources:
+  IamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName:
+        Fn::Sub: ${PREFIX}IamRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+  ApiEndpoint:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName:
+        Fn::Sub: ${PREFIX}ApiEndpoint
+      Cors: '''*'''
+  HelloWorldFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName:
+        Fn::Sub: ${PREFIX}Function
+      CodeUri: HelloWorldFunction
+      Handler: app.lambdaHandler
+      Runtime: nodejs12.x
+      Role:
+        Fn::GetAtt:
+        - IamRole
+        - Arn
+      Events:
+        HelloWorld:
+          Type: Api
+          Properties:
+            RestApiId:
+              Ref: ApiEndpoint
+            Path: /musixmatch-proxy/{proxy+}
+            Method: ANY
+      Environment:
+        Variables:
+          apikey:
+            Fn::Sub: ${APIKEY}
+Outputs:
+  RestApi:
+    Description: 'API endpoint URLs for Proxy stage:'
+    Value:
+      Fn::Sub: https://${ApiEndpoint}.execute-api.${AWS::Region}.amazonaws.com/${PREFIX}ApiEndpoint/musixmatch-proxy/
