@@ -1,9 +1,8 @@
 const axios = require('axios')
 const process = require('process')
 
-const apiBase = 'https://api.musixmatch.com/ws/1.1/'
+const apiBase = process.env.apibase
 const apikey = process.env.apikey
-
 
 /**
  *
@@ -15,7 +14,7 @@ const apikey = process.env.apikey
  * 
  */
 exports.lambdaHandler = async (event, context) => {
-    try {
+    try {               
 
       let params = {
         "apikey": apikey

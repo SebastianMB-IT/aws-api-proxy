@@ -8,5 +8,5 @@ s3_prefix = "MXMDeploy"
 region = "eu-central-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_NAMED_IAM"
-parameter_overrides = "PREFIX=\"MXM\" ORIGIN=\"master.example.amplifyapp.com\" APIKEY=\"871cdaeaa43459b2e9d53a1d4ce3ff63\""
+parameter_overrides = "PREFIX=\"MXM\" ORIGIN=\"master.example.amplifyapp.com\" APIBASE=\"https://api.musixmatch.com/ws/1.1/\" APIKEY=\"871cdaeaa43459b2e9d53a1d4ce3ff63\""
 

@@ -17,6 +17,9 @@ Parameters:
   ORIGIN:
     Type: String
     Default: master.example.amplifyapp.com
+  APIBASE:
+    Type: String
+    Default: "https://api.musixmatch.com/ws/1.1/"
   APIKEY:
     Type: String
     Default: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -47,7 +50,7 @@ Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      FunctionName: !Sub "${PREFIX}Function"
+      FunctionName: !Sub "${PREFIX}Proxy"
       CodeUri: functions/musixmatch-proxy/
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
@@ -62,6 +65,7 @@ Resources:
       Environment:
         Variables:
           apikey: !Sub "${APIKEY}"
+          apibase: !Sub "${APIBASE}"
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
@@ -69,4 +73,4 @@ Outputs:
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   RestApi:
     Description: "API endpoint URLs for Proxy stage:"
-    Value: !Sub "https://${ApiEndpoint}.execute-api.${AWS::Region}.amazonaws.com/${PREFIX}ApiEndpoint/musixmatch-proxy/"
+    Value: !Sub "https://${ApiEndpoint}.execute-api.${AWS::Region}.amazonaws.com/${PREFIX}ApiEndpoint/musixmatch-proxy/" 

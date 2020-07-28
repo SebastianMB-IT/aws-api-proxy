@@ -15,6 +15,9 @@ Parameters:
   ORIGIN:
     Type: String
     Default: master.example.amplifyapp.com
+  APIBASE:
+    Type: String
+    Default: https://api.musixmatch.com/ws/1.1/
   APIKEY:
     Type: String
     Default: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -45,7 +48,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName:
-        Fn::Sub: ${PREFIX}Function
+        Fn::Sub: ${PREFIX}Proxy
       CodeUri: HelloWorldFunction
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
@@ -65,6 +68,8 @@ Resources:
         Variables:
           apikey:
             Fn::Sub: ${APIKEY}
+          apibase:
+            Fn::Sub: ${APIBASE}
 Outputs:
   RestApi:
     Description: 'API endpoint URLs for Proxy stage:'
