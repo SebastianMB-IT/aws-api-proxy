@@ -1,6 +1,5 @@
 # Node.js Serverless Backend
-AWS Serverless Application Model and ready to use API Gateway, Lambda Functions, Cognito User Pool and DynamoDB for a complete and fully deployable backend in nodejs.
-There are some ready lambda functions working with DynamoDB for a simple first approach to the serverless applications on AWS.
+AWS Serverless Application Model and ready to use API Gateway, IAM Role and Lambda Function for a complete and fully deployable proxy in nodejs to reinforce the musixmatch apis.
 
 ---------------------
 
@@ -8,7 +7,7 @@ This project contains source code and supporting files for a serverless applicat
 
 - functions - Code for the application's Lambda functions.
 - events - Invocation events that you can use to invoke the function.
-- functions/hello-world/tests - Unit tests for the application code. 
+- functions/musixmatch-proxy/tests - Unit tests for the application code. 
 - template.yaml - A template that defines the application's AWS resources.
 
 The application uses several AWS resources, including Lambda functions and an API Gateway API. These resources are defined in the `template.yaml` file in this project. You can update the template to add AWS resources through the same deployment process that updates your application code.
@@ -56,14 +55,14 @@ Build your application with the `sam build` command.
 aws-sam$ sam build
 ```
 
-The SAM CLI installs dependencies defined in `functions/hello-world/package.json`, creates a deployment package, and saves it in the `.aws-sam/build` folder.
+The SAM CLI installs dependencies defined in `functions/musixmatch-api/package.json`, creates a deployment package, and saves it in the `.aws-sam/build` folder.
 
 Test a single function by invoking it directly with a test event. An event is a JSON document that represents the input that the function receives from the event source. Test events are included in the `events` folder in this project.
 
 Run functions locally and invoke them with the `sam local invoke` command.
 
 ```bash
-aws-sam$ sam local invoke HelloWorldFunction --event events/event.json
+aws-sam$ sam local invoke MusixmatchProxyFunction --event events/event.json
 ```
 
 The SAM CLI can also emulate your application's API. Use the `sam local start-api` to run the API locally on port 3000.
@@ -80,8 +79,9 @@ The SAM CLI reads the application template to determine the API's routes and the
         HelloWorld:
           Type: Api
           Properties:
-            Path: /hello
-            Method: get
+            RestApiId: !Ref ApiEndpoint
+            Path: "/musixmatch-proxy/{proxy+}"
+            Method: ANY
 ```
 
 ## Add a resource to your application
@@ -94,7 +94,7 @@ To simplify troubleshooting, SAM CLI has a command called `sam logs`. `sam logs`
 `NOTE`: This command works for all AWS Lambda functions; not just the ones you deploy using SAM.
 
 ```bash
-aws-sam$ sam logs -n HelloWorldFunction --stack-name aws-sam --tail
+aws-sam$ sam logs -n MusixmatchProxyFunction --stack-name aws-sam --tail
 ```
 
 You can find more information and examples about filtering Lambda function logs in the [SAM CLI Documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html).
