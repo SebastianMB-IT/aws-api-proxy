@@ -43,13 +43,12 @@ Resources:
     Properties:
       StageName:
         Fn::Sub: ${PREFIX}ApiEndpoint
-      Cors: '''*'''
-  HelloWorldFunction:
+  MusixmatchProxyFunction:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName:
         Fn::Sub: ${PREFIX}Proxy
-      CodeUri: HelloWorldFunction
+      CodeUri: MusixmatchProxyFunction
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
       Role:

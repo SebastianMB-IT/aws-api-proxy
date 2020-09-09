@@ -31,6 +31,9 @@ exports.lambdaHandler = async (event, context) => {
       })
       return {
         'statusCode': res.data.message.header.status_code,
+        'headers': {
+          "Access-Control-Allow-Origin" : "*"
+        },
         'body': JSON.stringify(res.data.message.body)
       }
 
