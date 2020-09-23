@@ -3,6 +3,7 @@ const process = require('process')
 
 const apiBase = process.env.apibase
 const apikey = process.env.apikey
+const origin = process.env.origin
 
 /**
  *
@@ -32,7 +33,7 @@ exports.lambdaHandler = async (event, context) => {
       return {
         'statusCode': res.data.message.header.status_code,
         'headers': {
-          "Access-Control-Allow-Origin" : "*"
+          "Access-Control-Allow-Origin" : origin
         },
         'body': JSON.stringify(res.data.message.body)
       }

@@ -1,6 +1,6 @@
 {
-  "resource": "/musixmatch-proxy/{proxy+}",
-  "path": "/musixmatch-proxy/chart.tracks.get",
+  "resource": "/api-proxy/{proxy+}",
+  "path": "/api-proxy/chart.tracks.get",
   "httpMethod": "GET",
   "headers": {
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -72,11 +72,11 @@
   "stageVariables": null,
   "requestContext": {
     "resourceId": "ceg3fg",
-    "resourcePath": "/musixmatch-proxy/{proxy+}",
+    "resourcePath": "/api-proxy/{proxy+}",
     "httpMethod": "GET",
     "extendedRequestId": "QZoUMGQ0liAFa7Q=",
     "requestTime": "28/Jul/2020:20:15:09 +0000",
-    "path": "/MXMApiEndpoint/musixmatch-proxy/chart.tracks.get",
+    "path": "/MXMApiEndpoint/api-proxy/chart.tracks.get",
     "accountId": "032031757788",
     "protocol": "HTTP/1.1",
     "stage": "MXMApiEndpoint",

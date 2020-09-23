@@ -4,7 +4,7 @@ Description: >
   sam-app
 
   Sample AWS SAM Template
-  
+
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
@@ -19,7 +19,7 @@ Parameters:
     Default: master.example.amplifyapp.com
   APIBASE:
     Type: String
-    Default: "https://api.musixmatch.com/ws/1.1/"
+    Default: "https://api.service.com/ws/1.1/"
   APIKEY:
     Type: String
     Default: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
@@ -46,11 +46,11 @@ Resources:
     Properties:
       StageName: !Sub "${PREFIX}ApiEndpoint"
 
-  MusixmatchProxyFunction:
+  ApiProxyFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       FunctionName: !Sub "${PREFIX}Proxy"
-      CodeUri: functions/musixmatch-proxy/
+      CodeUri: functions/api-proxy/
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
       Role: !GetAtt IamRole.Arn
@@ -59,7 +59,7 @@ Resources:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             RestApiId: !Ref ApiEndpoint
-            Path: "/musixmatch-proxy/{proxy+}"
+            Path: "/api-proxy/{proxy+}"
             Method: ANY
       Environment:
         Variables:
@@ -72,4 +72,4 @@ Outputs:
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   RestApi:
     Description: "API endpoint URLs for Proxy stage:"
-    Value: !Sub "https://${ApiEndpoint}.execute-api.${AWS::Region}.amazonaws.com/${PREFIX}ApiEndpoint/musixmatch-proxy/" 
+    Value: !Sub "https://${ApiEndpoint}.execute-api.${AWS::Region}.amazonaws.com/${PREFIX}ApiEndpoint/api-proxy/" 
